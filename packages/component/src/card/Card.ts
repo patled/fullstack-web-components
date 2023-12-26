@@ -9,9 +9,9 @@ export class CardComponent extends HTMLElement {
     <style>
     :host {
       display: block;
-      background: var(--color-white); 
-      border-radius: var(--radius-md); 
-      box-shadow: var(--shadow); 
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
       overflow: hidden;
       max-width: 320px;
     }      
@@ -20,13 +20,12 @@ export class CardComponent extends HTMLElement {
       padding-left: var(--padding-lg);
       padding-right: var(--padding-lg);
     }
-
     ::slotted(a:link), ::slotted(a:visited) {
-      dispay: block;
+      display: block;
     }
 
     ::slotted(:last-child) {
-      padding-bottom: var(--padding-lg);
+      padding-bottom: var(--margin-lg);
     }
 
     ::slotted(img) {
