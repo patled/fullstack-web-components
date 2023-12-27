@@ -18,12 +18,24 @@ export default {
   component: 'in-textinput',
 };
 
-const PrimaryTemplate = ({}) => {
+const PrimaryTemplate = ({ onValidate, validators }) => {
   setTimeout(() => {
     const input = document.querySelector(`[name="username"]`);
     input.$validator = validators['username'];
   }, 0);
-  return html`<form><in-textinput name="username" required></in-textinput></form>`;
+  return html`<form @validate="${onValidate}">
+    <in-textinput name="username" required></in-textinput>
+  </form>`;
 };
 
 export const Primary = PrimaryTemplate.bind({});
+Primary.args = {
+  validators,
+  onValidate: (e) => {
+    if (!document.querySelector(`[name="username"]`).validity.valid) {
+      console.log('invalid');
+    } else {
+      console.log('valid');
+    }
+  },
+};
