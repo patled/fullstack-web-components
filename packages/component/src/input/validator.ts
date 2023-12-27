@@ -5,3 +5,7 @@ export type Validator = {
     message?: string;
   }[];
 };
+
+export function validate(elem: any, showError: boolean) {
+  
+}

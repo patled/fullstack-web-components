@@ -1,4 +1,4 @@
-import { Validator } from './validator';
+import { Validator, validate } from './validator';
 
 export class TextInputComponent extends HTMLElement {
   static formAssociated = true;
@@ -73,9 +73,15 @@ export class TextInputComponent extends HTMLElement {
   }
 
   connectedCallback() {
+    this.$input.onblur = () => {
+      this.onValidate(true);
+    };
+
     for (let prop in this.$attr) {
       this.$input.setAttribute(prop, this.$attr[prop]);
     }
+
+    this.onValidate(false);
   }
 
   get value() {
@@ -97,6 +103,10 @@ export class TextInputComponent extends HTMLElement {
     if (value === 'false' || value === false) {
       this.$input.removeAttribute('required');
     }
+  }
+
+  onValidate(showError: boolean) {
+    validate(this, showError);
   }
 }
 
