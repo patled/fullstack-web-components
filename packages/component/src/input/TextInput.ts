@@ -47,7 +47,7 @@ export class TextInputComponent extends HTMLElement {
     <div class="control">
       <input type="text" />
     </div>
-    <div clas="message"></div>
+    <div class="message"></div>
     `;
 
     shadowRoot.appendChild(template.content.cloneNode(true));

@@ -21,6 +21,7 @@ export default {
 const PrimaryTemplate = ({ onValidate, validators }) => {
   setTimeout(() => {
     const input = document.querySelector(`[name="username"]`);
+    // attach the validation logic to the input
     input.$validator = validators['username'];
   }, 0);
   return html`<form @validate="${onValidate}">

@@ -11,10 +11,26 @@ export function validate(elem: any, showError: boolean) {
     return;
   }
 
+  const messageElem = elem.shadowRoot.querySelector('.message');
+  if (messageElem) {
+    messageElem.innerHTML = '';
+  }
+
   const activeValidators = [];
 
   elem.$validator.validations.forEach((validator) => {
     if (validator.condition(elem)) {
+      if (showError) {
+        if (elem.$input) {
+          elem.$input.classList.add('error');
+        }
+        if (messageElem) {
+          const div = document.createElement('div');
+          messageElem.innerHTML = validator.message;
+          messageElem.appendChild(div);
+        }
+      }
+
       elem.setValidity(validator.flag, validator.message);
       activeValidators.push(validator);
     }
@@ -22,6 +38,12 @@ export function validate(elem: any, showError: boolean) {
 
   if (!activeValidators.length) {
     elem.setValidity({});
+    if (elem.$input) {
+      elem.$input.classList.remove('error');
+    }
+    if (messageElem) {
+      messageElem.innerHTML = '';
+    }
   }
 
   elem.dispatchEvent(new CustomEvent('validate', { bubbles: true }));
