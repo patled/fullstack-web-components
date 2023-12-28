@@ -49,56 +49,56 @@ export default {
   component: 'in-textinput',
 };
 
-const PrimaryTemplate = ({ onValidate, validators }) => {
-  setTimeout(() => {
-    const input = document.getElementById('username-1');
-    // attach the validation logic to the input
-    input.$validator = validators['username'];
-  }, 0);
-  return html`<form @validate="${onValidate}">
-    <in-textinput id="username-1" required></in-textinput>
-  </form>`;
-};
+// const PrimaryTemplate = ({ onValidate, validators }) => {
+//   setTimeout(() => {
+//     const input = document.getElementById('username-1');
+//     // attach the validation logic to the input
+//     input.$validator = validators['username'];
+//   }, 0);
+//   return html`<form @validate="${onValidate}">
+//     <in-textinput id="username-1" required></in-textinput>
+//   </form>`;
+// };
 
-export const Primary = PrimaryTemplate.bind({});
-Primary.args = {
-  validators,
-  onValidate: (e) => {
-    if (!document.getElementById('username-1').validity.valid) {
-      console.log('invalid');
-    } else {
-      console.log('valid');
-    }
-  },
-};
+// export const Primary = PrimaryTemplate.bind({});
+// Primary.args = {
+//   validators,
+//   onValidate: (e) => {
+//     if (!document.getElementById('username-1').validity.valid) {
+//       console.log('invalid');
+//     } else {
+//       console.log('valid');
+//     }
+//   },
+// };
 
-const DisabledTemplate = () =>
-  html`<in-textinput
-    disabled
-    value="disabled input"
-    name="test-input"
-  ></in-textinput>`;
+// const DisabledTemplate = () =>
+//   html`<in-textinput
+//     disabled
+//     value="disabled input"
+//     name="test-input"
+//   ></in-textinput>`;
 
-export const Disabled = DisabledTemplate.bind({});
-Disabled.args = {};
+// export const Disabled = DisabledTemplate.bind({});
+// Disabled.args = {};
 
-const ErrorTemplate = ({}) => {
-  setTimeout(() => {
-    const input = document.getElementById('error-case');
-    input.$validator = validators['username'];
-    input.focus();
-    input.blur();
-  }, 0);
+// const ErrorTemplate = ({}) => {
+//   setTimeout(() => {
+//     const input = document.getElementById('error-case');
+//     input.$validator = validators['username'];
+//     input.focus();
+//     input.blur();
+//   }, 0);
 
-  return html`<in-textinput
-    type="text"
-    id="error-case"
-    required
-    class="form-control"
-  ></in-textinput>`;
-};
-export const Error = ErrorTemplate.bind({});
-ErrorTemplate.args = {};
+//   return html`<in-textinput
+//     type="text"
+//     id="error-case"
+//     required
+//     class="form-control"
+//   ></in-textinput>`;
+// };
+// export const Error = ErrorTemplate.bind({});
+// ErrorTemplate.args = {};
 
 const FormTemplate = ({ headline, onSubmit, onValidate, onFormData }) => {
   setTimeout(() => {

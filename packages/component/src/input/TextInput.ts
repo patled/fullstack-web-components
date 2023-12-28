@@ -222,6 +222,14 @@ export class TextInputComponent extends HTMLElement {
       this.onValidate(true);
     };
 
+    this.$input.oninput = () => {
+      this.onInput();
+    };
+
+    // this.$input.onchange = () => {
+    //   this.onChange();
+    // };
+
     for (let prop in this.$attr) {
       this.$input.setAttribute(prop, this.$attr[prop]);
     }
@@ -265,6 +273,21 @@ export class TextInputComponent extends HTMLElement {
   blur() {
     this.$input.blur();
   }
+
+  onInput() {
+    this.shadowRoot.querySelector('.message').innerHTML = '';
+    this.$input.classList.remove('error');
+    this.internals.setFormValue(this.value, this.value);
+  }
+
+  formStateRestoreCallback(state: string, mode: string) {
+    this.value = state;
+  }
+
+  formResetCallback(state: string) {
+    this.value = this.getAttribute('value') || '';
+  }
+
 }
 
 customElements.define('in-textinput', TextInputComponent);
