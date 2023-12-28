@@ -137,7 +137,7 @@ const FormTemplate = ({ headline, onSubmit, onValidate, onFormData }) => {
           pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
           class="form-control"
         ></in-textinput>
-        <button class="primary" type="submit" is="in-button">Submit</button>
+        <button class="primary submit" type="submit" is="in-button">Submit</button>
       </fieldset>
   </form>
     `;
