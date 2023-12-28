@@ -107,9 +107,13 @@ export class TextInputComponent extends HTMLElement {
     </style>
 
     <div class="control">
-      <input type="text" />
+      <input type="text" aria-describedby="message"/>
     </div>
-    <div class="message"></div>
+    <div class="message" 
+      id="message" 
+      aria-role="alert" 
+      aria-live="assertive">
+    </div>
     `;
 
     shadowRoot.appendChild(template.content.cloneNode(true));
@@ -226,6 +230,10 @@ export class TextInputComponent extends HTMLElement {
       this.onInput();
     };
 
+    this.$input.onkeyup = () => {
+      this.onInput();
+    }
+
     // this.$input.onchange = () => {
     //   this.onChange();
     // };
@@ -277,6 +285,7 @@ export class TextInputComponent extends HTMLElement {
   onInput() {
     this.shadowRoot.querySelector('.message').innerHTML = '';
     this.$input.classList.remove('error');
+    this.$input.removeAttribute("aria-invalid");
     this.internals.setFormValue(this.value, this.value);
   }
 

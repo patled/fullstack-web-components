@@ -25,22 +25,41 @@ Secondary.args = {
 };
 
 let icon = null;
+let svg = null;
 
 if (window.FontAwesome) {
   icon = window.FontAwesome.icon({ prefix: 'fas', iconName: 'plus' });
+  svg = icon.node[0];
+  svg.setAttribute('aria-hidden', 'true');
 }
-const svg = icon.node[0];
 
-export const Icon = Template.bind({});
-Icon.args = {
-  variant: 'icon icon-close',
-  label: svg,
-};
+// export const Icon = Template.bind({});
+// Icon.args = {
+//   variant: 'icon icon-close',
+//   label: svg,
+// };
 
 const DisabledTemplate = ({ label, variant }) =>
   html`<button disabled class="${variant}" is="in-button">${label}</button>`;
-  export const Disabled = DisabledTemplate.bind({});
+export const Disabled = DisabledTemplate.bind({});
 Disabled.args = {
   label: 'Submit',
   variant: 'primary',
+};
+
+const IconTemplate = ({ label, variant, svg }) => html`
+  <button
+    class="${variant}"
+    aria-labelledby="close-button-label"
+    is="in-button"
+  >
+    <span id="close-button-label" hidden>${label}</span>
+    ${svg}
+  </button>
+`;
+export const Icon = IconTemplate.bind({});
+Icon.args = {
+  label: 'Close',
+  variant: 'icon icon-close',
+  svg: svg,
 };

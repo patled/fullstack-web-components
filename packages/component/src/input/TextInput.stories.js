@@ -1,5 +1,6 @@
 import { html } from 'lit-html';
 import { TextInputComponent } from './TextInput';
+import { ButtonComponent } from '../button/Button';
 
 const validators = {
   username: {
@@ -136,11 +137,12 @@ const FormTemplate = ({ headline, onSubmit, onValidate, onFormData }) => {
           pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$"
           class="form-control"
         ></in-textinput>
-        <input class="submit" type="submit" value="Submit" />
+        <button class="primary" type="submit" is="in-button">Submit</button>
       </fieldset>
   </form>
     `;
 };
+
 export const Form = FormTemplate.bind({});
 Form.args = {
   headline: 'Login Form',
