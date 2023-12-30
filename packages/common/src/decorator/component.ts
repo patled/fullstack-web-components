@@ -7,6 +7,7 @@ export interface ElementMeta {
 export function Component(meta: ElementMeta) {
   if (!meta) {
     console.error('Component must include ElementMeta to compile');
+    return;
   }
   return (target: any) => {
     if (!meta.template) {

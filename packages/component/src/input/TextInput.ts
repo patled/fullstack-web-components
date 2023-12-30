@@ -1,5 +1,64 @@
 import { Validator, validate } from './validator';
+import { Component, attachShadow } from '@in/common';
 
+@Component({
+  selector: 'in-textinput',
+  style: `:host {
+    display: block;
+    font-family: var(--font-default);
+    font-size: var(--font-body-sm);
+  }
+  input {
+    height: var(--input-min-dimension);
+    width: 100%;
+    border-radius: var(--radius-sm);
+    border: var(--border-default);
+    font-size: var(--font-body-md);
+    padding-left: var(--padding-sm);
+    outline: none;
+    box-sizing: border-box;
+  }
+  input:focus,
+  input:focus:hover,
+  input:active {
+    border: var(--border-focus);
+  }
+  input.error,
+  input.error:hover,
+  input.error:focus,
+  input.error:active {
+    border: var(--border-error);
+    outline: none;
+    box-shadow: none;
+    color: var(--color-error);
+  }
+  .message {
+    margin-top: var(--margin-xxs);
+    color: var(--color-error);
+    font-weight: var(--font-weight-default);
+  }
+  input[disabled] {
+    opacity: var(---color-disable);
+    background: var(--color-disable);
+    border: var(--border-disable);
+  }
+  input[disabled]:hover,
+  input[disabled]:focus,
+  input[disabled]:active {
+    border: var(--border-disable);
+    outline: none;
+    box-shadow: none;
+  }`,
+  template: `<div class="control">
+      <input type="text" aria-describedby="message" />
+    </div>
+    <div
+      class="message"
+      id="message"
+      aria-role="alert"
+      aria-live="assertive"
+    ></div>`,
+})
 export class TextInputComponent extends HTMLElement {
   static formAssociated = true;
 
@@ -51,72 +110,7 @@ export class TextInputComponent extends HTMLElement {
 
   constructor() {
     super();
-
-    const shadowRoot = this.attachShadow({ mode: 'open' });
-    const template = document.createElement('template');
-
-    template.innerHTML = `
-
-    <style>
-    :host {
-      display: block;
-      font-family: var(--font-default);
-      font-size: var(--font-body-sm);
-    }
-    input {
-      height: var(--input-min-dimension);
-      width: 100%;
-      border-radius: var(--radius-sm);
-      border: var(--border-default);
-      font-size: var(--font-body-md);
-      padding-left: var(--padding-sm);
-      outline: none;
-      box-sizing: border-box;
-    }
-    input:focus,
-    input:focus:hover,
-    input:active {
-      border: var(--border-focus);
-    }
-    input.error,
-    input.error:hover,
-    input.error:focus,
-    input.error:active {
-      border: var(--border-error);
-      outline: none;
-      box-shadow: none;
-      color: var(--color-error);
-    }
-    .message {
-      margin-top: var(--margin-xxs);
-      color: var(--color-error);
-      font-weight: var(--font-weight-default);
-    }
-    input[disabled] {
-      opacity: var(---color-disable);
-      background: var(--color-disable);
-      border: var(--border-disable);
-    }
-    input[disabled]:hover,
-    input[disabled]:focus,
-    input[disabled]:active {
-      border: var(--border-disable);
-      outline: none;
-      box-shadow: none;
-    }
-    </style>
-
-    <div class="control">
-      <input type="text" aria-describedby="message"/>
-    </div>
-    <div class="message" 
-      id="message" 
-      aria-role="alert" 
-      aria-live="assertive">
-    </div>
-    `;
-
-    shadowRoot.appendChild(template.content.cloneNode(true));
+    attachShadow(this);
 
     this.internals = this.attachInternals();
   }
@@ -232,7 +226,7 @@ export class TextInputComponent extends HTMLElement {
 
     this.$input.onkeyup = () => {
       this.onInput();
-    }
+    };
 
     // this.$input.onchange = () => {
     //   this.onChange();
@@ -285,7 +279,7 @@ export class TextInputComponent extends HTMLElement {
   onInput() {
     this.shadowRoot.querySelector('.message').innerHTML = '';
     this.$input.classList.remove('error');
-    this.$input.removeAttribute("aria-invalid");
+    this.$input.removeAttribute('aria-invalid');
     this.internals.setFormValue(this.value, this.value);
   }
 
@@ -296,7 +290,4 @@ export class TextInputComponent extends HTMLElement {
   formResetCallback(state: string) {
     this.value = this.getAttribute('value') || '';
   }
-
 }
-
-customElements.define('in-textinput', TextInputComponent);

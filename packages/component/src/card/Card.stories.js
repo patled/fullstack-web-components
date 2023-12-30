@@ -1,4 +1,5 @@
 import { CardComponent } from './Card';
+import { html } from 'lit-html';
 
 export default {
   title: 'Components/Card',
@@ -10,7 +11,7 @@ export default {
   },
 };
 
-const PrimaryTemplate = ({ image, headline, content, link }) => `
+const PrimaryTemplate = ({ image, headline, content, link }) => html`
 <in-card>
 <img slot="header" src="${image}"> <h4 slot="header">${headline}</h4>
 <p slot="content">${content}</p>
