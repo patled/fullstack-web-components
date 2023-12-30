@@ -1,5 +1,5 @@
 import { Validator, validate } from './validator';
-import { Component, attachShadow, css, html } from '@in/common';
+import { Component, attachShadow, Listen, css, html } from '@in/common';
 
 @Component({
   selector: 'in-textinput',
@@ -218,27 +218,11 @@ export class TextInputComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    this.$input.onblur = () => {
-      this.onValidate(true);
-    };
-
-    this.$input.oninput = () => {
-      this.onInput();
-    };
-
-    this.$input.onkeyup = () => {
-      this.onInput();
-    };
-
-    // this.$input.onchange = () => {
-    //   this.onChange();
-    // };
-
     for (let prop in this.$attr) {
       this.$input.setAttribute(prop, this.$attr[prop]);
     }
 
-    this.onValidate(false);
+    validate(this, false);
   }
 
   get value() {
@@ -262,8 +246,9 @@ export class TextInputComponent extends HTMLElement {
     }
   }
 
-  onValidate(showError: boolean) {
-    validate(this, showError);
+  @Listen('blur', 'input')
+  onValidate() {
+    validate(this, true);
   }
 
   formDisabledCallback(disabled: boolean) {
@@ -278,6 +263,8 @@ export class TextInputComponent extends HTMLElement {
     this.$input.blur();
   }
 
+  @Listen('keyup', 'input')
+  @Listen('input', 'input')
   onInput() {
     this.shadowRoot.querySelector('.message').innerHTML = '';
     this.$input.classList.remove('error');
