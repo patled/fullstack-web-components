@@ -1,3 +1,5 @@
+import { attachStyle, Component } from '@in/common';
+
 const buttonStyles = `
 	.in-button.primary {
 		background: var(--color-blue-500);
@@ -86,27 +88,18 @@ const buttonStyles = `
 	}
 `;
 
+@Component({
+  custom: { extends: 'button' },
+  selector: 'in-button',
+  style: buttonStyles,
+})
 export class ButtonComponent extends HTMLButtonElement {
   constructor() {
     super();
   }
 
-  addStylesheet() {
-    const head = document.head;
-    if (document.getElementById('in-button-style')) {
-      return;
-    }
-
-    const style = document.createElement('style');
-    style.setAttribute('id', 'in-button-style');
-    style.textContent = buttonStyles;
-    head.appendChild(style);
-  }
-
   connectedCallback() {
     this.classList.add('in-button');
-    this.addStylesheet();
+    attachStyle(this);
   }
 }
-
-customElements.define('in-button', ButtonComponent, { extends: 'button' });
