@@ -1,55 +1,57 @@
 import { Validator, validate } from './validator';
-import { Component, attachShadow } from '@in/common';
+import { Component, attachShadow, css, html } from '@in/common';
 
 @Component({
   selector: 'in-textinput',
-  style: `:host {
-    display: block;
-    font-family: var(--font-default);
-    font-size: var(--font-body-sm);
-  }
-  input {
-    height: var(--input-min-dimension);
-    width: 100%;
-    border-radius: var(--radius-sm);
-    border: var(--border-default);
-    font-size: var(--font-body-md);
-    padding-left: var(--padding-sm);
-    outline: none;
-    box-sizing: border-box;
-  }
-  input:focus,
-  input:focus:hover,
-  input:active {
-    border: var(--border-focus);
-  }
-  input.error,
-  input.error:hover,
-  input.error:focus,
-  input.error:active {
-    border: var(--border-error);
-    outline: none;
-    box-shadow: none;
-    color: var(--color-error);
-  }
-  .message {
-    margin-top: var(--margin-xxs);
-    color: var(--color-error);
-    font-weight: var(--font-weight-default);
-  }
-  input[disabled] {
-    opacity: var(---color-disable);
-    background: var(--color-disable);
-    border: var(--border-disable);
-  }
-  input[disabled]:hover,
-  input[disabled]:focus,
-  input[disabled]:active {
-    border: var(--border-disable);
-    outline: none;
-    box-shadow: none;
-  }`,
-  template: `<div class="control">
+  style: css`
+    :host {
+      display: block;
+      font-family: var(--font-default);
+      font-size: var(--font-body-sm);
+    }
+    input {
+      height: var(--input-min-dimension);
+      width: 100%;
+      border-radius: var(--radius-sm);
+      border: var(--border-default);
+      font-size: var(--font-body-md);
+      padding-left: var(--padding-sm);
+      outline: none;
+      box-sizing: border-box;
+    }
+    input:focus,
+    input:focus:hover,
+    input:active {
+      border: var(--border-focus);
+    }
+    input.error,
+    input.error:hover,
+    input.error:focus,
+    input.error:active {
+      border: var(--border-error);
+      outline: none;
+      box-shadow: none;
+      color: var(--color-error);
+    }
+    .message {
+      margin-top: var(--margin-xxs);
+      color: var(--color-error);
+      font-weight: var(--font-weight-default);
+    }
+    input[disabled] {
+      opacity: var(---color-disable);
+      background: var(--color-disable);
+      border: var(--border-disable);
+    }
+    input[disabled]:hover,
+    input[disabled]:focus,
+    input[disabled]:active {
+      border: var(--border-disable);
+      outline: none;
+      box-shadow: none;
+    }
+  `,
+  template: html`<div class="control">
       <input type="text" aria-describedby="message" />
     </div>
     <div
