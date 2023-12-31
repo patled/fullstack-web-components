@@ -19,7 +19,7 @@ const rowData = [
     street: '656 Main St',
     city: 'Anytown',
     region: 'CA',
-    postalCode: '12345',
+    postalCode: '32123',
   },
   {
     email: 'jim@gmail.com',
@@ -27,7 +27,7 @@ const rowData = [
     street: '322 Main St',
     city: 'Anytown',
     region: 'CA',
-    postalCode: '12345',
+    postalCode: '54234',
   },
   {
     email: 'john@gmail.com',
@@ -35,7 +35,7 @@ const rowData = [
     street: '666 Main St',
     city: 'Anytown',
     region: 'CA',
-    postalCode: '12345',
+    postalCode: '65464',
   },
 ];
 
@@ -56,8 +56,16 @@ export default {
 };
 
 const Template = ({ channelName, context }) => {
+  const channel = new BroadcastChannel(channelName);
+  setTimeout(() => {
+    channel.postMessage({
+      type: 'data',
+      detail: context,
+    });
+  }, 0);
   return html` <in-tablecard channel="${channelName}"></in-tablecard> `;
 };
+
 export const Primary = Template.bind({});
 Primary.args = {
   channelName: 'table:one',
