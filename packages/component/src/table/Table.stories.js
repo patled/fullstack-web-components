@@ -1,6 +1,7 @@
 import { html } from 'lit-html';
 import { TableCardComponent } from './TableCard';
 import { TableComponent, ColumnData } from './Table';
+import { TextInputComponent } from '../input/TextInput';
 
 // export { TableCardComponent, TableComponent, ColumnData };
 
