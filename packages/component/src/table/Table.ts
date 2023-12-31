@@ -78,8 +78,21 @@ export class TableComponent extends HTMLTableElement {
       case 'data':
         this.onTableData(event.data.detail);
         break;
+      case 'edit':
+        this.onEdit();
+        break;
+      case 'readOnly':
+        this.onReadOnly();
+        break;
+      case 'save':
+        this.onSave();
+        break;
     }
   }
+
+  onEdit() {}
+  onReadOnly() {}
+  onSave() {}
 
   onTableData(next) {
     this.renderHeader(next.columnData);
