@@ -1,4 +1,5 @@
 import { Component, attachTemplate, attachStyle, html, css } from '@in/common';
+import { TrComponent } from './Tr';
 
 export interface Column {
   property: string;
@@ -90,8 +91,23 @@ export class TableComponent extends HTMLTableElement {
     }
   }
 
-  onEdit() {}
-  onReadOnly() {}
+  onEdit() {
+    if (!this.savedState) {
+      this.savedState = JSON.parse(JSON.stringify(this.state));
+      console.log('this.state:', this.state);
+    }
+  }
+
+  onReadOnly() {
+    const cells = this.querySelectorAll('td');
+    cells.forEach((cell) => {
+      cell.setAttribute('readonly', 'true');
+    });
+    if (this.savedState) {
+      this.renderRows(this.savedState);
+      this.savedState = undefined;
+    }
+  }
   onSave() {}
 
   onTableData(next) {
@@ -99,9 +115,18 @@ export class TableComponent extends HTMLTableElement {
     this.renderRows(next.rowData);
   }
 
+  get state() {
+    return Array.from(this.querySelector('tbody').querySelectorAll('tr')).map(
+      (tr: TrComponent) => tr.$rowData
+    );
+  }
+
+  private savedState: any[];
+
   renderHeader(cols: ColumnData) {
     this.columnData = cols.sort((a, b) => a.index - b.index);
-    const tr = document.createElement('tr');
+    const tr = document.createElement('tr', { is: 'in-tr' });
+
     this.columnData.forEach((col) => {
       const th = document.createElement('th');
       th.innerText = col.label;
@@ -115,13 +140,26 @@ export class TableComponent extends HTMLTableElement {
   renderRows(rows: any[]) {
     this.$body.innerHTML = '';
     rows.forEach((row) => {
-      const tr = document.createElement('tr');
+      const tr = document.createElement('tr', { is: 'in-tr' });
+
       this.columnData.forEach((col) => {
-        const td = document.createElement('td');
+        const td = document.createElement('td', { is: 'in-td' });
         td.innerText = row[col.property];
+        td.setAttribute('value', row[col.property]);
+        td.setAttribute('readonly', 'true');
         tr.appendChild(td);
       });
       this.$body.appendChild(tr);
+
+      //TODO: this does not work!
+      tr.dispatchEvent(
+        new CustomEvent('data', {
+          detail: row,
+        })
+      );
+      // used this instead of TODO
+      const inTr = tr as TrComponent;
+      inTr.$rowData = row;
     });
   }
 }
