@@ -16,32 +16,21 @@ import { Component, attachTemplate, attachStyle, html, css } from '@in/common';
       display: none;
     }
   `,
-  template: html`<span class="td-readonly"></span>
+  template: html`
+    <span class="td-readonly"></span>
     <span class="td-input">
-      <in-texinput type="text"></in-texinput>
-    </span>`,
+      <in-textinput type="text"></in-textinput>
+    </span>
+  `,
 })
 export class TdComponent extends HTMLTableCellElement {
   constructor() {
     super();
     attachTemplate(this);
+  }
+
+  connectedCallback() {
     attachStyle(this);
-  }
-
-  get $readonly(): HTMLSpanElement {
-    return this.querySelector('.td-readonly');
-  }
-
-  get $input(): HTMLInputElement {
-    return this.querySelector('in-textinput');
-  }
-
-  get $inputContainer(): HTMLSpanElement {
-    return this.querySelector('.td-input');
-  }
-
-  setValue(value: string) {
-    this.$readonly.innerText = value;
   }
 
   static get observedAttributes() {
@@ -59,13 +48,29 @@ export class TdComponent extends HTMLTableCellElement {
     }
   }
 
+  setValue(value: string) {
+    this.$readOnly.innerText = value;
+  }
+
   setMode(readOnly: boolean) {
     if (readOnly) {
-      this.$readonly.removeAttribute('hidden');
+      this.$readOnly.removeAttribute('hidden');
       this.$inputContainer.setAttribute('hidden', 'true');
     } else {
-      this.$readonly.setAttribute('hidden', 'true');
+      this.$readOnly.setAttribute('hidden', 'true');
       this.$inputContainer.removeAttribute('hidden');
     }
+  }
+
+  get $readOnly(): HTMLSpanElement {
+    return this.querySelector('.td-readonly');
+  }
+
+  get $input(): HTMLInputElement {
+    return this.querySelector('in-textinput');
+  }
+
+  get $inputContainer(): HTMLSpanElement {
+    return this.querySelector('.td-input');
   }
 }
